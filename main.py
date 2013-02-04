@@ -4,12 +4,24 @@ import re
 import os
 
 ohcnum = str(int(random.random() * 225)).zfill(3)
+song_place = int(random.random() * 5)
+
+# Download OHC page
 response = urllib2.urlopen('http://compo.thasauce.net/rounds/view/OHC%s' % ohcnum)
 html = ""
 html = response.read()
 
+
+def find_theme(html):
+    theme = re.findall('(Tonights|Tonight\'s|Todays|Today\'s) theme is:? "(.*)"', html)
+    if len(theme) > 0:
+        return theme[0][1]
+    return "???"
+
+print "OHC%s (Theme: %s)" % (ohcnum, find_theme(html))
+
 idx = 0
- 
+
 # skip over "Materials" section
 while True:
     i = html.find('a href="/files/', idx)
@@ -22,10 +34,10 @@ url = ""
 
 for x in range(5):
     idx = html.find('a href="/files/', idx + 1)
-    endidx = html.find('">Download')
+    endidx = html.find('">Download', idx)
     url = "http://compo.thasauce.net" + html[idx + len('a href="'):endidx ]
-    print url
-    break
+    if x == song_place:
+        break
 
 # Download the song
 
