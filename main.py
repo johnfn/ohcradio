@@ -11,14 +11,13 @@ response = urllib2.urlopen('http://compo.thasauce.net/rounds/view/OHC%s' % ohcnu
 html = ""
 html = response.read()
 
-
 def find_theme(html):
     theme = re.findall('(Tonights|Tonight\'s|Todays|Today\'s) theme is:? "(.*)"', html)
     if len(theme) > 0:
         return theme[0][1]
     return "???"
 
-print "OHC%s (Theme: %s)" % (ohcnum, find_theme(html))
+print "OHC%s, rank %d (Theme: %s)" % (ohcnum, song_place + 1, find_theme(html))
 
 idx = 0
 
