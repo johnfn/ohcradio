@@ -37,11 +37,11 @@ def get_ohc_url(which_ohc, which_rank):
         if x == which_rank:
             return url
 
-# Download the song
 
 ohc_num = str(int(random.random() * 225)).zfill(3)
 song_rank = int(random.random() * 5)
 
+# Download the song
 print "Downloading..."
 req = urllib2.Request(get_ohc_url(ohc_num, song_rank))
 mp3response = urllib2.urlopen(req)
